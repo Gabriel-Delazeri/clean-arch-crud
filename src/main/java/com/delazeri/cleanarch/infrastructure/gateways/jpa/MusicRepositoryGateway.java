@@ -7,7 +7,7 @@ import com.delazeri.cleanarch.infrastructure.persistence.jpa.MusicRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MusicRepositoryGateway implements MusicGateway {
+public class MusicRepositoryGateway implements MusicGateway<Long> {
     private final MusicRepository musicRepository;
     private final MusicEntityMapper musicEntityMapper;
 
@@ -23,5 +23,10 @@ public class MusicRepositoryGateway implements MusicGateway {
         return musicEntityMapper.entityToDomainObj(
                 this.musicRepository.save(musicToBePersisted)
         );
+    }
+
+    @Override
+    public Music findMusic(Long id) {
+        return musicEntityMapper.entityToDomainObj(musicRepository.findById(id).orElseThrow());
     }
 }
