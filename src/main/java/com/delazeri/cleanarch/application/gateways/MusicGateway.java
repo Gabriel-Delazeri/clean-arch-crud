@@ -9,4 +9,5 @@ public interface MusicGateway<T> {
     Music findMusic(T t);
     List<Music> findAllMusics();
     Music updateMusic(T t, Music music);
+    void deleteMusic(T t);
 }
