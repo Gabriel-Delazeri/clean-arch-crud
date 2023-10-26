@@ -1,6 +1,7 @@
-package com.delazeri.cleanarch.application.usecases;
+package com.delazeri.cleanarch.application.usecases.implementations;
 
 import com.delazeri.cleanarch.application.gateways.MusicGateway;
+import com.delazeri.cleanarch.application.usecases.contracts.FindAllMusicsUseCase;
 import com.delazeri.cleanarch.domain.entity.Music;
 
 import java.util.List;
