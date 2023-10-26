@@ -2,7 +2,7 @@ package com.delazeri.cleanarch.infrastructure.controllers.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record CreateMusicRequest(
+public record MusicRequest(
         String name,
         String slug,
         @JsonProperty(value = "image_url") String imageUrl,

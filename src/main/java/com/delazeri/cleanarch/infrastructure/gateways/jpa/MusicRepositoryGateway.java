@@ -39,4 +39,14 @@ public class MusicRepositoryGateway implements MusicGateway<Long> {
                 .map(musicEntityMapper::entityToDomainObj)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Music updateMusic(Long id, Music music) {
+        findMusic(id);
+
+        MusicEntity musicToBePersisted = musicEntityMapper.domainObjToEntity(music);
+        musicToBePersisted.setId(id);
+
+        return musicEntityMapper.entityToDomainObj(musicRepository.save(musicToBePersisted));
+    }
 }
