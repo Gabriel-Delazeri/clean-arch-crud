@@ -1,10 +1,7 @@
 package com.delazeri.cleanarch.infrastructure.config;
 
 import com.delazeri.cleanarch.application.gateways.MusicGateway;
-import com.delazeri.cleanarch.application.usecases.CreateMusicUseCase;
-import com.delazeri.cleanarch.application.usecases.CreateMusicUseCaseImpl;
-import com.delazeri.cleanarch.application.usecases.FindMusicUseCase;
-import com.delazeri.cleanarch.application.usecases.FindMusicUseCaseImpl;
+import com.delazeri.cleanarch.application.usecases.*;
 import com.delazeri.cleanarch.infrastructure.controllers.MusicDTOMapper;
 import com.delazeri.cleanarch.infrastructure.gateways.jpa.MusicEntityMapper;
 import com.delazeri.cleanarch.infrastructure.gateways.jpa.MusicRepositoryGateway;
@@ -22,6 +19,11 @@ public class MusicConfig {
     @Bean
     FindMusicUseCase<Long> findMusicUseCase(MusicGateway<Long> musicGateway) {
         return new FindMusicUseCaseImpl<Long>(musicGateway);
+    }
+
+    @Bean
+    FindAllMusicsUseCase findAllMusicsUseCase(MusicGateway<Long> musicGateway) {
+        return new FindAllMusicsUseCaseImpl(musicGateway);
     }
 
     @Bean

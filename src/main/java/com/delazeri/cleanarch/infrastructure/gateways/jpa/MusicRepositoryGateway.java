@@ -6,6 +6,9 @@ import com.delazeri.cleanarch.infrastructure.persistence.jpa.MusicEntity;
 import com.delazeri.cleanarch.infrastructure.persistence.jpa.MusicRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MusicRepositoryGateway implements MusicGateway<Long> {
     private final MusicRepository musicRepository;
@@ -28,5 +31,12 @@ public class MusicRepositoryGateway implements MusicGateway<Long> {
     @Override
     public Music findMusic(Long id) {
         return musicEntityMapper.entityToDomainObj(musicRepository.findById(id).orElseThrow());
+    }
+
+    @Override
+    public List<Music> findAllMusics() {
+        return musicRepository.findAll().stream()
+                .map(musicEntityMapper::entityToDomainObj)
+                .collect(Collectors.toList());
     }
 }

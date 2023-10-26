@@ -11,15 +11,19 @@ public class MusicDTOMapper {
         return new Music(request.name(), request.slug(), request.imageUrl(), request.artistName(), request.durationMs());
     }
 
+    public MusicResponse domainObJToRawResponse(Music music) {
+        return new MusicResponse(
+                music.name(),
+                music.slug(),
+                music.imageUrl(),
+                music.artistName(),
+                music.durationMs()
+        );
+    }
+
     public Response<MusicResponse> domainObjToResponse(Music music, boolean success) {
         return new Response<>(
-                new MusicResponse(
-                        music.name(),
-                        music.slug(),
-                        music.imageUrl(),
-                        music.artistName(),
-                        music.durationMs()
-                ),
+                domainObJToRawResponse(music),
                 success
         );
     }
