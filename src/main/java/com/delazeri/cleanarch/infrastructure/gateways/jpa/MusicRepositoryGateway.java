@@ -49,4 +49,13 @@ public class MusicRepositoryGateway implements MusicGateway<Long> {
 
         return musicEntityMapper.entityToDomainObj(musicRepository.save(musicToBePersisted));
     }
+
+    @Override
+    public void deleteMusic(Long id) {
+        MusicEntity musicToDeleted = musicEntityMapper.domainObjToEntity(findMusic(id));
+
+        musicToDeleted.setId(id);
+
+        musicRepository.delete(musicToDeleted);
+    }
 }

@@ -1,9 +1,6 @@
 package com.delazeri.cleanarch.infrastructure.controllers;
 
-import com.delazeri.cleanarch.application.usecases.contracts.CreateMusicUseCase;
-import com.delazeri.cleanarch.application.usecases.contracts.FindAllMusicsUseCase;
-import com.delazeri.cleanarch.application.usecases.contracts.FindMusicUseCase;
-import com.delazeri.cleanarch.application.usecases.contracts.UpdateMusicUseCase;
+import com.delazeri.cleanarch.application.usecases.contracts.*;
 import com.delazeri.cleanarch.domain.entity.Music;
 import com.delazeri.cleanarch.infrastructure.controllers.requests.MusicRequest;
 import com.delazeri.cleanarch.infrastructure.controllers.responses.MusicResponse;
@@ -21,13 +18,15 @@ public class MusicController {
     private final FindMusicUseCase<Long> findMusicUseCase;
     private final FindAllMusicsUseCase findAllMusicsUseCase;
     private final UpdateMusicUseCase<Long> updateMusicUseCase;
+    private final DeleteMusicUseCase<Long> deleteMusicUseCase;
 
-    MusicController(CreateMusicUseCase createMusicUseCase, MusicDTOMapper musicDTOMapper, FindMusicUseCase<Long> findMusicUseCase, FindAllMusicsUseCase findAllMusicsUseCase, UpdateMusicUseCase<Long> updateMusicUseCase) {
+    MusicController(CreateMusicUseCase createMusicUseCase, MusicDTOMapper musicDTOMapper, FindMusicUseCase<Long> findMusicUseCase, FindAllMusicsUseCase findAllMusicsUseCase, UpdateMusicUseCase<Long> updateMusicUseCase, DeleteMusicUseCase<Long> deleteMusicUseCase) {
         this.createMusicUseCase = createMusicUseCase;
         this.musicDTOMapper = musicDTOMapper;
         this.findMusicUseCase = findMusicUseCase;
         this.findAllMusicsUseCase = findAllMusicsUseCase;
         this.updateMusicUseCase = updateMusicUseCase;
+        this.deleteMusicUseCase = deleteMusicUseCase;
     }
     @GetMapping
     public ResponseEntity<Response<List<MusicResponse>>> findAll() {
@@ -58,5 +57,12 @@ public class MusicController {
         Music music = this.updateMusicUseCase.updateMusic(id, musicDTOMapper.requestToDomainObj(updateMusicRequest));
 
         return ResponseEntity.ok(musicDTOMapper.domainObjToResponse(music, true));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteMusic(@PathVariable Long id) {
+        this.deleteMusicUseCase.deleteMusic(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
